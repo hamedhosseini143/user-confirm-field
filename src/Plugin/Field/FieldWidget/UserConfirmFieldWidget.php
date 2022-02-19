@@ -57,10 +57,10 @@ class UserConfirmFieldWidget extends WidgetBase {
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
       if ($value['user'] === '') {
-        $values[$delta]['confirm'] = NULL;
+        $values[$delta]['user'] = NULL;
       }
       if ($value['confirm'] === '') {
-        $values[$delta]['value_2'] = NULL;
+        $values[$delta]['confirm'] = NULL;
       }
     }
     return $values;

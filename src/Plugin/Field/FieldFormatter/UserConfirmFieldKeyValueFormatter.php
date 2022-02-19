@@ -69,7 +69,7 @@ class UserConfirmFieldKeyValueFormatter extends FormatterBase {
             ],
             [
               'data' => [
-                '#markup' => $item->value_2 ? $this->t('Yes') : $this->t('No'),
+                '#markup' => $item->confirm ? $this->t('Yes') : $this->t('No'),
               ],
             ],
           ],
