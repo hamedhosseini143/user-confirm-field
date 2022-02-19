@@ -4,7 +4,9 @@ namespace Drupal\user_conf\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\user_conf\Plugin\Field\FieldType\UserConfirmFieldItem;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 
 /**
  * Plugin implementation of the 'user_confirm_field_default' formatter.
@@ -26,18 +28,19 @@ class UserConfirmFieldDefaultFormatter extends FormatterBase {
     foreach ($items as $delta => $item) {
 
       if ($item->confirm) {
-        $allowed_values = UserConfirmFieldItem::allowedUserValues();
+        $user = User::load($item->user);
+        $link = Link::fromTextAndUrl($user->realname, Url::fromRoute('entity.user.canonical', ['user' => 1]));
         $element[$delta]['confirm'] = [
           '#type' => 'item',
           '#title' => $this->t('user'),
-          '#markup' => $allowed_values[$item->confirm],
+          '#markup' => $link->toString(),
         ];
       }
 
-      $element[$delta]['value_2'] = [
+      $element[$delta]['confirm'] = [
         '#type' => 'item',
-        '#title' => $this->t('Value 2'),
-        '#markup' => $item->value_2 ? $this->t('Yes') : $this->t('No'),
+        '#title' => $this->t('confirm'),
+        '#markup' => $item->confirm ? $this->t('Yes') : $this->t('No'),
       ];
 
     }

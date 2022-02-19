@@ -4,6 +4,9 @@ namespace Drupal\user_conf\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 use Drupal\user_conf\Plugin\Field\FieldType\UserConfirmFieldItem;
 
 /**
@@ -34,6 +37,8 @@ class UserConfirmFieldKeyValueFormatter extends FormatterBase {
       if ($item->confirm) {
         $allowed_values = UserConfirmFieldItem::allowedUserValues();
 
+        $user = User::load($item->user);
+        $link = Link::fromTextAndUrl($user->realname, Url::fromRoute('entity.user.canonical', ['user' => 1]));
         $table['#rows'][] = [
           'data' => [
             [
@@ -44,7 +49,7 @@ class UserConfirmFieldKeyValueFormatter extends FormatterBase {
             ],
             [
               'data' => [
-                '#markup' => $allowed_values[$item->confirm],
+                '#markup' => $link->toString(),
               ],
             ],
           ],
@@ -53,13 +58,13 @@ class UserConfirmFieldKeyValueFormatter extends FormatterBase {
       }
 
       // Value 2.
-      if ($item->value_2) {
+      if ($item->confirm) {
         $table['#rows'][] = [
           'data' => [
             [
               'header' => TRUE,
               'data' => [
-                '#markup' => $this->t('Value 2'),
+                '#markup' => $this->t('confirm'),
               ],
             ],
             [

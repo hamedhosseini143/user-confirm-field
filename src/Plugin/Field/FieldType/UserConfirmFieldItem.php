@@ -2,6 +2,7 @@
 
 namespace Drupal\user_conf\Plugin\Field\FieldType;
 
+use Drupal;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -54,7 +55,7 @@ class UserConfirmFieldItem extends FieldItemBase {
 
     $options['user']['AllowedValues'] = array_keys(UserConfirmFieldItem::allowedUserValues());
 
-    $constraint_manager = \Drupal::typedDataManager()->getValidationConstraintManager();
+    $constraint_manager = Drupal::typedDataManager()->getValidationConstraintManager();
     $constraints[] = $constraint_manager->create('ComplexData', $options);
     // @todo Add more constraints here.
     return $constraints;
@@ -103,11 +104,8 @@ class UserConfirmFieldItem extends FieldItemBase {
    *   The list of allowed values.
    */
   public static function allowedUserValues() {
-    return [
-      123 => 123,
-      456 => 456,
-      789 => 789,
-    ];
+    $query = Drupal::entityQuery('user');
+    return $query->execute();
   }
 
 }
