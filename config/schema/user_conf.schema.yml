@@ -8,7 +8,7 @@ field.value.user_confirm_field:
       label: user
     value_2:
       type: boolean
-      label: Value 2
+      label: confirm
 # Field widget.
 field.widget.settings.user_confirm_field:
   type: mapping

@@ -24,10 +24,10 @@ class UserConfirmFieldItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    if ($this->confirm !== NULL) {
+    if ($this->user !== NULL) {
       return FALSE;
     }
-    elseif ($this->value_2 == 1) {
+    elseif ($this->confirm == 1) {
       return FALSE;
     }
     return TRUE;
@@ -38,10 +38,10 @@ class UserConfirmFieldItem extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
 
-    $properties['confirm'] = DataDefinition::create('integer')
+    $properties['user'] = DataDefinition::create('integer')
       ->setLabel(t('user'));
-    $properties['value_2'] = DataDefinition::create('boolean')
-      ->setLabel(t('Value 2'));
+    $properties['confirm'] = DataDefinition::create('boolean')
+      ->setLabel(t('confirm'));
 
     return $properties;
   }
@@ -52,7 +52,7 @@ class UserConfirmFieldItem extends FieldItemBase {
   public function getConstraints() {
     $constraints = parent::getConstraints();
 
-    $options['confirm']['AllowedValues'] = array_keys(UserConfirmFieldItem::allowedUserValues());
+    $options['user']['AllowedValues'] = array_keys(UserConfirmFieldItem::allowedUserValues());
 
     $constraint_manager = \Drupal::typedDataManager()->getValidationConstraintManager();
     $constraints[] = $constraint_manager->create('ComplexData', $options);
@@ -66,11 +66,11 @@ class UserConfirmFieldItem extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
 
     $columns = [
-      'confirm' => [
+      'user' => [
         'type' => 'int',
         'size' => 'normal',
       ],
-      'value_2' => [
+      'confirm' => [
         'type' => 'int',
         'size' => 'tiny',
       ],
@@ -89,9 +89,9 @@ class UserConfirmFieldItem extends FieldItemBase {
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
 
-    $values['confirm'] = array_rand(self::allowedUserValues());
+    $values['user'] = array_rand(self::allowedUserValues());
 
-    $values['value_2'] = (bool) mt_rand(0, 1);
+    $values['confirm'] = (bool) mt_rand(0, 1);
 
     return $values;
   }

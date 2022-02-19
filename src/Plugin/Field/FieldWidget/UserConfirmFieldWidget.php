@@ -22,48 +22,19 @@ class UserConfirmFieldWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return ['foo' => 'bar'] + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-    $settings = $this->getSettings();
-    $element['foo'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo'],
-    ];
-    return $element;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsSummary() {
-    $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
-    return $summary;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
-    $element['confirm'] = [
-      '#type' => 'select',
+    $element['user'] = [
+      '#type' => 'textfield',
       '#title' => $this->t('user'),
-      '#options' => ['' => $this->t('- None -')] + UserConfirmFieldItem::allowedUserValues(),
-      '#default_value' => isset($items[$delta]->confirm) ? $items[$delta]->confirm : NULL,
+      '#default_value' => isset($items[$delta]->user) ? $items[$delta]->user : NULL,
     ];
 
-    $element['value_2'] = [
+
+    $element['confirm'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Value 2'),
-      '#default_value' => isset($items[$delta]->value_2) ? $items[$delta]->value_2 : NULL,
+      '#title' => $this->t('confirm'),
+      '#default_value' => isset($items[$delta]->confirm) ? $items[$delta]->confirm : NULL,
     ];
 
     $element['#theme_wrappers'] = ['container', 'form_element'];
@@ -85,10 +56,10 @@ class UserConfirmFieldWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      if ($value['confirm'] === '') {
+      if ($value['user'] === '') {
         $values[$delta]['confirm'] = NULL;
       }
-      if ($value['value_2'] === '') {
+      if ($value['confirm'] === '') {
         $values[$delta]['value_2'] = NULL;
       }
     }
