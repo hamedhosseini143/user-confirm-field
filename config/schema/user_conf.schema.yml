@@ -1,0 +1,19 @@
+# Default value.
+field.value.user_confirm_field:
+  type: mapping
+  label: Default value
+  mapping:
+    confirm:
+      type: integer
+      label: user
+    value_2:
+      type: boolean
+      label: Value 2
+# Field widget.
+field.widget.settings.user_confirm_field:
+  type: mapping
+  label: Example widget settings
+  mapping:
+    foo:
+      type: string
+      label: Foo

@@ -1,0 +1,6 @@
+name: user conf
+type: module
+description: user confirm field
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9

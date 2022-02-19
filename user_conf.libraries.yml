@@ -1,0 +1,4 @@
+user_confirm_field:
+  css:
+    component:
+      css/user-confirm-field-widget.css: {}
